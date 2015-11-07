@@ -1,0 +1,5 @@
+[
+	{ "keys": ["super+y"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Delete Line.sublime-macro"} },
+	{ "keys": ["ctrl+shift+k"], "command": "redo_or_repeat" },
+  { "keys": ["super+ctrl+t"], "command": "delete_trailing_spaces" },
+]
