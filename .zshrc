@@ -22,18 +22,6 @@ bindkey '^N' history-search-forward
 
 setopt AUTO_CD
 
-if [[ `which figlet | wc -l` -ne 0 ]]; then
-  NICE_THINGS=( "You're awesome" "May the Force be with you!" "Take a break!")
-  random_number=$(( ( RANDOM % 3 ) + 1 ))
-  echo ${NICE_THINGS[$random_number]} | figlet
-fi
-
-if [[ -e ~/tmp/logs/dotfiles.log ]]; then
-  lines=3
-  echo "Dotfiles Updater - Showing ${lines} line(s)"
-  tail -${lines} ~/tmp/logs/dotfiles.log
-fi
-
 export GOPATH="/users/${USER}/go"
 export GOBIN="${GOPATH}/bin"
 export PATH="$GOBIN:$PATH"
