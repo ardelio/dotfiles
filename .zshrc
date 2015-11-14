@@ -1,5 +1,5 @@
 ZSH=$HOME/vcs/git/oh-my-zsh
-ZSH_THEME="asceresini"
+ZSH_THEME="pure"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_TITLE=true
 EDITOR='vim'
