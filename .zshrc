@@ -1,4 +1,4 @@
-ZSH=$HOME/vcs/git/oh-my-zsh
+ZSH=$HOME/plugins/oh-my-zsh
 ZSH_THEME="pure"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_AUTO_TITLE=true
@@ -33,6 +33,8 @@ export PATH="~/.bundler_binstubs:$PATH"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+export PATH="$PATH:/usr/local/bin/"
 ###-begin-npm-completion-###
 #
 # npm command completion script

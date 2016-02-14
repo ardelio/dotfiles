@@ -24,6 +24,12 @@ function tmns() {tmux new -s $@;}
 function tmas() {tmux attach-session -t $@;}
 function tmrs() {tmux rename-session -t $@;}
 
+alias dev_up='pushd ~/development/environment; vagrant up; popd;'
+alias dev_destroy='pushd ~/development/environment; vagrant destroy; popd;'
+alias dev_status='echo $(cd ~/development/environment; vagrant status;)'
+alias dev_halt='echo $(cd ~/development/environment; vagrant halt;)'
+alias dev_ssh='$( cd ~/development/environment; vagrant ssh;)'
+
 # courtesy Taichi Nakashima - github.com/tcnksm/docker-alias
 
 # ------------------------------------
@@ -63,7 +69,7 @@ alias drmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 # Remove images or all image
 drmi() { [[ -n $1 ]] && docker rmi $@ || docker rmi $(docker images -q); }
 
-# Dockerfile build, e.g., $dbu tcnksm/test 
+# Dockerfile build, e.g., $dbu tcnksm/test
 dbu() { docker build -t=$1 .; }
 
 # Show all alias related docker
