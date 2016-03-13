@@ -27,14 +27,11 @@ export GOBIN="${GOPATH}/bin"
 export PATH="$GOBIN:$PATH"
 
 export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+source $(/usr/local/bin/brew --prefix nvm)/nvm.sh
 
 export PATH="~/.bundler_binstubs:$PATH"
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-export PATH="$PATH:/usr/local/bin/"
+export PATH="/usr/local/bin:$PATH"
 ###-begin-npm-completion-###
 #
 # npm command completion script
@@ -95,7 +92,8 @@ if [ -d "$PERSONAL_HOME_DIR" ]; then
   [ -f /Users/asceresi/.travis/travis.sh ] && source /Users/asceresi/.travis/travis.sh
 fi
 
-if [ -d "$TABCORP_HOME_DIR" ]; then
-  # nothing to put in here yet
-fi
+eval "$(rbenv init -)"
 
+
+# added by travis gem
+[ -f /Users/ardelio/.travis/travis.sh ] && source /Users/ardelio/.travis/travis.sh
