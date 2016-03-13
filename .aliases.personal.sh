@@ -9,15 +9,14 @@ alias be='bundle exec'
 alias ber='bundle exec rails'
 
 alias zshrc='vim ~/.zshrc'
-alias dotfiles='cd ~/vcs/git/dotfiles'
-
-alias http_server='python -m SimpleHTTPServer 8888'
-alias tm='tmux list-sessions && tmux attach || tmux'
-alias tmls='tmux list-sessions'
-alias gitx='/Applications/GitX.app/Contents/Resources/gitx'
-
+alias dotfiles='cd ~/dotfiles'
 alias dotfile_log='cat ~/tmp/logs/dotfiles.log'
 
+alias http_server='python -m SimpleHTTPServer 8888'
+alias gitx='/Applications/GitX.app/Contents/Resources/gitx'
+
+alias tm='tmux list-sessions && tmux attach || tmux'
+alias tmls='tmux list-sessions'
 function hgrep() {history | grep -e "$@";}
 function tmks() {tmux kill-session -t $@;}
 function tmns() {tmux new -s $@;}
