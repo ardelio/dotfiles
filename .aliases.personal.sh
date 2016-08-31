@@ -1,33 +1,24 @@
 alias ls='ls -G'
 alias ll='ls -alGh'
 
-alias vi='mvim -v'
+alias vi='nvim'
 alias vim='vi'
 alias grep='egrep --color=auto'
 
 alias be='bundle exec'
 alias ber='bundle exec rails'
 
-alias zshrc='vim ~/.zshrc'
 alias dotfiles='cd ~/dotfiles'
-alias dotfile_log='cat ~/tmp/logs/dotfiles.log'
 
 alias http_server='python -m SimpleHTTPServer 8888'
 alias gitx='/Applications/GitX.app/Contents/Resources/gitx'
 
 alias tm='tmux list-sessions && tmux attach || tmux'
 alias tmls='tmux list-sessions'
-function hgrep() {history | grep -e "$@";}
 function tmks() {tmux kill-session -t $@;}
 function tmns() {tmux new -s $@;}
 function tmas() {tmux attach-session -t $@;}
 function tmrs() {tmux rename-session -t $@;}
-
-alias dev_up='pushd ~/development/environment; vagrant up; popd;'
-alias dev_destroy='pushd ~/development/environment; vagrant destroy; popd;'
-alias dev_status='echo $(cd ~/development/environment; vagrant status;)'
-alias dev_halt='echo $(cd ~/development/environment; vagrant halt;)'
-alias dev_ssh='$( cd ~/development/environment; vagrant ssh;)'
 
 # courtesy Taichi Nakashima - github.com/tcnksm/docker-alias
 
@@ -73,9 +64,6 @@ dbu() { docker build -t=$1 .; }
 
 # Show all alias related docker
 dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort;}
-
-# docker-machine
-alias dm="docker-machine"
 
 # docker-compose
 alias dc="docker-compose"
