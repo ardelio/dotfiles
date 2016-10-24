@@ -9,9 +9,6 @@ let g:airline_theme = 'hybrid'
 
 let mapleader=" "
 set t_Co=256
-set tabstop=2
-set shiftwidth=2
-set expandtab
 set incsearch
 set autoindent
 set linebreak
@@ -33,4 +30,6 @@ set backupdir=$HOME/.vim-backup
 set undodir=$HOME/.vim-undo
 set viewdir=$HOME/.vim-views
 set directory=$HOME/.vim-swap
-
+set tabstop=2
+set shiftwidth=2
+set expandtab
