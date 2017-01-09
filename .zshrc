@@ -23,6 +23,9 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Tell antigen that you're done.
 antigen apply
 
+
+[ -f ~/.aliases.personal.sh ] && source ~/.aliases.personal.sh
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVM_DIR="$HOME/.nvm"
