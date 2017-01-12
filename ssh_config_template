@@ -1,0 +1,18 @@
+Host *
+  ServerAliveInterval 60
+
+Host prod_* _prod_bastion
+  User ubuntu
+
+Host _prod_bastion
+  IdentityFile ~/.ssh/<SSH_KEY_A>.pem
+  HostName 201.1.1.1
+
+Host prod_*
+  IdentityFile ~/.ssh/<SSH_KEY_B>.pem
+
+Host prod_*
+  ProxyCommand  ssh _prod_bastion nc -w 120 %h %p 2> /dev/null
+
+Host prod_<SOME_HOST>
+  HostName 10.1.1.1
