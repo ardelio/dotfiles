@@ -25,6 +25,7 @@ antigen apply
 
 
 [ -f ~/.aliases.personal.sh ] && source ~/.aliases.personal.sh
+[ -f ~/.aliases.myob.sh ] && source ~/.aliases.myob.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
