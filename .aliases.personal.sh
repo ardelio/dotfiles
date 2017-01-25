@@ -1,7 +1,7 @@
 alias ls='ls -G'
 alias ll='ls -alGh'
 
-alias vi='nvim'
+alias vi='title $(basename $(pwd)) && nvim'
 alias vim='vi'
 alias grep='egrep --color=auto'
 
