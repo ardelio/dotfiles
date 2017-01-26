@@ -22,7 +22,7 @@ set noreadonly
 set splitright
 set splitbelow
 set cursorline
-"set cursorcolumn
+set cursorcolumn
 set colorcolumn=100
 "highlight ColorColumn ctermbg=0 guibg=lightgrey
 set backup

@@ -20,3 +20,7 @@ nnoremap tn :tabnext<CR>
 " NerdTree
 let NERDTreeRespectWildIgnore = 1
 map <leader>n <plug>NERDTreeTabsToggle<CR>
+
+" Platinum Searcher
+map // :Pt <C-R><C-W><CR>
+map! // :Pt <C-R><C-W><CR>
