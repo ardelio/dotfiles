@@ -23,4 +23,3 @@ map <leader>n <plug>NERDTreeTabsToggle<CR>
 
 " Platinum Searcher
 nmap // :Pt <C-R><C-W><CR>
-nmap! // :Pt <C-R><C-W><CR>
