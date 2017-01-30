@@ -31,10 +31,28 @@ antigen apply
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVM_DIR="$HOME/.nvm"
+export PATH="/usr/local/bin:$PATH"
+
+export BULLETTRAIN_PROMPT_ORDER=(
+  time
+  status
+  custom
+  context
+  dir
+  perl
+  # ruby
+  virtualenv
+  nvm
+  go
+  git
+  hg
+  cmd_exec_time
+)
+
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 alias gpp='git status | fpp'
 alias title='export DISABLE_AUTO_TITLE=true && title'
 
-export PATH="/usr/local/bin:$PATH"
+eval "$(rbenv init -)"
 . /usr/local/etc/profile.d/z.sh
