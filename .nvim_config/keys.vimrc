@@ -22,5 +22,5 @@ let NERDTreeRespectWildIgnore = 1
 map <leader>n <plug>NERDTreeTabsToggle<CR>
 
 " Platinum Searcher
-map // :Pt <C-R><C-W><CR>
-map! // :Pt <C-R><C-W><CR>
+nmap // :Pt <C-R><C-W><CR>
+nmap! // :Pt <C-R><C-W><CR>
