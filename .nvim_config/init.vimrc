@@ -3,6 +3,7 @@
 
 call plug#begin()
 
+Plug 'mklabs/split-term.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Yggdroot/indentLine'
