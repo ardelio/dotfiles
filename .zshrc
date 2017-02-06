@@ -56,3 +56,6 @@ alias title='export DISABLE_AUTO_TITLE=true && title'
 
 eval "$(rbenv init -)"
 . /usr/local/etc/profile.d/z.sh
+
+# added by travis gem
+[ -f /Users/anthony.sceresini/.travis/travis.sh ] && source /Users/anthony.sceresini/.travis/travis.sh

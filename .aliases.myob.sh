@@ -1,3 +1,4 @@
+alias login_aws_myob_ex_taxonline_development_apse2='aws-adfs login --adfs-host adfs.myob.com.au --profile myob-ex-taxonline-development --region ap-southeast-2'
 alias login_aws_myobad_apse2='aws-adfs login --adfs-host adfs.myob.com.au --profile myobad --region ap-southeast-2'
 alias login_aws_myobaprod_apse2='aws-adfs login --adfs-host adfs.myob.com.au --profile myobaprod --region ap-southeast-2'
 
