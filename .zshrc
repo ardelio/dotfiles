@@ -32,7 +32,6 @@ antigen apply
 
 export NVM_DIR="$HOME/.nvm"
 export PATH="/usr/local/bin:$PATH"
-export DEVTOOLS_CURRENT_VERSION="0.8.0"
 
 export BULLETTRAIN_PROMPT_ORDER=(
   time
