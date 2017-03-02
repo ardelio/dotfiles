@@ -11,5 +11,5 @@ alias download_taxonline_assets='(login_aws_myobad_apse2 && cd ~/scratch/taxonli
 alias fly_tax='fly -t taxonline'
 function fly_tax_prune_workers() { fly_tax workers | grep stalled | awk '{print $1;}' | xargs -n 1 fly -t taxonline prune-worker -w; };
 
-DEVTOOLS_VERSION=0.11.0
+export DEVTOOLS_VERSION=0.11.0
 . ~/code/taxonline-devops/helpers/aliases.sh
