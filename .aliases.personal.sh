@@ -67,3 +67,6 @@ dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/[
 
 # docker-compose
 alias dc="docker-compose"
+
+# UO
+alias uocfg='vim /Applications/UO\ Renaissance.app/drive_c/Ultima\ Online/uo.cfg'
