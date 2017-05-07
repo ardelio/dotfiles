@@ -6,12 +6,9 @@ call plug#begin()
 Plug 'mklabs/split-term.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'easymotion/vim-easymotion'
-" Plug 'editorconfig/editorconfig-vim'
-" Plug 'elixir-lang/vim-elixir'
 Plug 'freitass/todo.txt-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'janko-m/vim-test'
@@ -25,8 +22,7 @@ Plug 'nathanaelkane/vim-indent-guides' " `,ig` to toggle
 Plug 'nazo/pt.vim'
 Plug 'neomake/neomake'
 Plug 'octref/RootIgnore'
-" Plug 'pangloss/vim-javascript'
-" Plug 'rking/ag.vim'
+Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree' ", { 'on': 'NERDTreeToggle' }
 Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
