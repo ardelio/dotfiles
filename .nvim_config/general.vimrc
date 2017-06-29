@@ -34,3 +34,4 @@ set directory=$HOME/.vim-swap
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set mouse=a
