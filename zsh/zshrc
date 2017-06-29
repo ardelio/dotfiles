@@ -28,7 +28,6 @@ antigen apply
 [ -f ~/.aliases.myob.sh ] && source ~/.aliases.myob.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.zsh/mac_settings.zsh ] && source ~/.zsh/mac_settings.zsh
-[ -f ~/.zsh/xps_settings.sh ] && source ~/.zsh/xps_settings.sh
 
 export BULLETTRAIN_PROMPT_ORDER=(
   time
