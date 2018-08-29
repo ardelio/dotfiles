@@ -103,3 +103,13 @@ fi
 
 export GOPATH=$(go env GOPATH)
 export PATH=$PATH:$GOPATH/bin
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /private/tmp/sample-lambda-app/node_modules/tabtab/.completions/serverless.zsh ]] && . /private/tmp/sample-lambda-app/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /private/tmp/sample-lambda-app/node_modules/tabtab/.completions/sls.zsh ]] && . /private/tmp/sample-lambda-app/node_modules/tabtab/.completions/sls.zsh
+[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
+export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+

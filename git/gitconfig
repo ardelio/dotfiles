@@ -6,6 +6,7 @@
 [color]
   ui = true
 [alias]
+  b = branch
   f = fetch
   s = status
   lol = log --pretty=oneline --abbrev-commit --graph --decorate

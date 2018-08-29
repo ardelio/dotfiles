@@ -1,3 +1,4 @@
+alias et='code .'
 alias ls='ls -G'
 alias ll='ls -alGh'
 
