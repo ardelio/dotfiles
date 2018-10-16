@@ -37,9 +37,9 @@ export BULLETTRAIN_PROMPT_ORDER=(
   dir
   perl
   # ruby
-  virtualenv
+  # virtualenv
   nvm
-  go
+  # go
   git
   hg
   cmd_exec_time
