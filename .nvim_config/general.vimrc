@@ -32,6 +32,9 @@ set undodir=$HOME/.vim-undo
 set viewdir=$HOME/.vim-views
 set directory=$HOME/.vim-swap
 set tabstop=2
+set softtabstop=0
 set shiftwidth=2
 set expandtab
+set smarttab
 set mouse=a
+set shell=/usr/local/bin/zsh
