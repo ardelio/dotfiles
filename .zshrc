@@ -1,4 +1,4 @@
-source ~/.zsh/antigen/antigen.zsh
+source ~/.antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -12,22 +12,16 @@ antigen bundle docker
 antigen bundle command-not-found
 antigen bundle brew
 
-# Syntax highlighting bundle.
+# Other Bundles
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
 
-# Load the theme.
 antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 
-# Setup autosuggestions
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Tell antigen that you're done.
 antigen apply
 
-[ -f ~/.aliases.personal.sh ] && source ~/.aliases.personal.sh
-[ -f ~/.aliases.myob.sh ] && source ~/.aliases.myob.sh
+[ -f ~/.dotfiles/.aliases.sh ] && source ~/.dotfiles/.aliases.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.zsh/mac_settings.zsh ] && source ~/.zsh/mac_settings.zsh
 
 export BULLETTRAIN_PROMPT_ORDER=(
   time
@@ -43,7 +37,9 @@ export BULLETTRAIN_PROMPT_ORDER=(
   git
   hg
   cmd_exec_time
-)###-begin-npm-completion-###
+)
+
+###-begin-npm-completion-###
 #
 # npm command completion script
 #
@@ -101,16 +97,9 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-npm-completion-###
 
-export GOPATH=$(go env GOPATH)
-export PATH=$PATH:$GOPATH/bin
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /private/tmp/sample-lambda-app/node_modules/tabtab/.completions/serverless.zsh ]] && . /private/tmp/sample-lambda-app/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /private/tmp/sample-lambda-app/node_modules/tabtab/.completions/sls.zsh ]] && . /private/tmp/sample-lambda-app/node_modules/tabtab/.completions/sls.zsh
 [[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
+
+[[ -s "/usr/local/etc/profile.d/z.sh" ]] && . /usr/local/etc/profile.d/z.sh
+
 export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
-. ~/.secrets-env-vars

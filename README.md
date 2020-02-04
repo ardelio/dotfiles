@@ -3,10 +3,8 @@ dotfiles
 
 Dot files for my linux installs
 
-To Do (Once installed)
------
+run the setup:
 
-Don't forget to load the submodules.
-
-1. git submodule init
-2. git submodule update
+```
+$ ./setup/init.sh
+```
