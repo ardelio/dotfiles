@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PLUGINS="awscli:aws bat diff-so-fancy fd fpp hub jq pt watch z"
+PLUGINS="awscli:aws bat diff-so-fancy fd fpp hub jq pt python3 watch z"
 
 for plugin in $PLUGINS; do
     IFS=':' read -ra ADDR <<< "$plugin"
