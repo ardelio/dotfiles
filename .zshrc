@@ -39,6 +39,11 @@ export BULLETTRAIN_PROMPT_ORDER=(
   cmd_exec_time
 )
 
+export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/.jenv/bin:$PATH"
+
 ###-begin-npm-completion-###
 #
 # npm command completion script
@@ -101,6 +106,4 @@ fi
 
 [[ -s "/usr/local/etc/profile.d/z.sh" ]] && . /usr/local/etc/profile.d/z.sh
 
-export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
+hash jenv && eval "$(jenv init -)"
