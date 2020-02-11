@@ -8,5 +8,6 @@ else
     python2 -m pip install neovim
     python3 -m pip install neovim
     ls -d ~/.config/nvim || ( mkdir -p $HOME/.config && ln -s ~/.dotfiles/nvim ~/.config/. )
+    mkdir -p $HOME/.vim-backup $HOME/.vim-undo $HOME/.vim-views $HOME/.vim-swap
     nvim +PlugInstall +qa
 fi
