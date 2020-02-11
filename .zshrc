@@ -15,6 +15,7 @@ antigen bundle brew
 # Other Bundles
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle gradle/gradle-completion
 
 antigen theme bhilburn/powerlevel9k powerlevel9k
 
