@@ -16,28 +16,31 @@ antigen bundle brew
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 
-antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+antigen theme bhilburn/powerlevel9k powerlevel9k
 
 antigen apply
 
 [ -f ~/.dotfiles/.aliases.sh ] && source ~/.dotfiles/.aliases.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export BULLETTRAIN_PROMPT_ORDER=(
-  time
-  status
-  custom
-  # context
-  dir
-  perl
-  # ruby
-  # virtualenv
-  nvm
-  # go
-  git
-  hg
-  cmd_exec_time
-)
+export POWERLEVEL9K_MODE='awesome-fontconfig'
+# export POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="🧟"
+# export POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="🧟 "
+export POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
+export POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='black'
+export POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='092'
+export POWERLEVEL9K_DIR_HOME_BACKGROUND='black'
+export POWERLEVEL9K_DIR_HOME_FOREGROUND='092'
+export POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='black'
+export POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='092'
+export POWERLEVEL9K_TIME_BACKGROUND='black'
+export POWERLEVEL9K_TIME_FOREGROUND='magenta'
+export POWERLEVEL9K_STATUS_OK_BACKGROUND='black'
+export POWERLEVEL9K_STATUS_OK_FOREGROUND='magenta'
+export POWERLEVEL9K_STATUS_ERROR_BACKGROUND='magenta'
+export POWERLEVEL9K_STATUS_ERROR_FOREGROUND='black'
 
 export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
