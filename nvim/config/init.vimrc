@@ -32,7 +32,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'w0ng/vim-hybrid'
 Plug 'wesQ3/vim-windowswap'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
