@@ -9,7 +9,7 @@ alias grep='egrep --color=auto'
 alias be='bundle exec'
 alias ber='bundle exec rails'
 
-alias dotfiles='cd ~/lib/dotfiles'
+alias dotfiles='cd ~/.dotfiles'
 
 alias http_server='python -m SimpleHTTPServer 8888'
 alias gitx='/Applications/GitX.app/Contents/Resources/gitx'
