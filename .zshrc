@@ -111,3 +111,4 @@ fi
 [[ -s "/usr/local/etc/profile.d/z.sh" ]] && . /usr/local/etc/profile.d/z.sh
 
 hash jenv && eval "$(jenv init -)"
+hash rbenv && eval "$(rbenv init -)"
