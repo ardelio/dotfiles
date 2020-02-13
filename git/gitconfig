@@ -29,7 +29,7 @@
   show = diff-so-fancy | less --tabs=1,5 -RFX
 [user]
 	name = Anthony Sceresini
-	email = anthony.sceresini@myob.com
+	email = asceresini@gmail.com
 [git]
 [github]
 [credential]
