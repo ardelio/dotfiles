@@ -2,4 +2,4 @@
 
 [ -f $HOME/.gitconfig ] && echo "gitconfig linked" || ( echo "linking gitconfig" && ln -s $HOME/.dotfiles/git/gitconfig $HOME/.gitconfig )
 [ -f $HOME/.gitignore_global ] && echo "global gitignore linked" || ( echo "linking global gitignore" && ln -s $HOME/.dotfiles/git/gitignore $HOME/.gitingore_global )
-[ -d $HOME/.bin ] && echo "~/.bin linked" || ( echo "linking bin" && ln -s $HOME/bin $HOME/.bin )
+[ -d $HOME/.bin ] && echo "~/.bin linked" || ( echo "linking bin" && ln -s $HOME/.dotfiles/bin $HOME/.bin )
