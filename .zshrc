@@ -46,6 +46,7 @@ export POWERLEVEL9K_STATUS_ERROR_FOREGROUND='black'
 export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
 
 export N_PREFIX=$HOME/.n
