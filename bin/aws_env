@@ -9,7 +9,12 @@ case $profile in
     saml2aws login -a $profile
     ;;
   *)
+    aws_config_profiles=$(cat ~/.aws/config | grep '\[.*\]' | sed 's/profile //' | sed 's/\[\(.*\)\]/ • \1/' | sort)
+    aws_credentials_profiles=$(cat ~/.aws/credentials | grep '\[.*\]' | sed 's/\[\(.*\)\]/• \1/' | sort)
     echo "Error: unknown AWS Profile"
-    exit 1
+    printf "\nProfiles found in ~/.aws/config:\n"
+    echo $aws_config_profiles
+    printf "\nProfiles found in ~/.aws.credentials:\n"
+    echo $aws_credentials_profiles
     ;;
 esac
