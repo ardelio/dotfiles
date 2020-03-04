@@ -3,6 +3,11 @@
 profile=$1
 
 case $profile in
+  ls)
+    echo Your current session is configured as:
+    printf " • AWS_PROFILE:\t${AWS_PROFILE:-not set}\n"
+    printf " • AWS_REGION:\t${AWS_REGION:-not set}\n"
+    ;;
   stax-vms | stax-vms-client-monitoring)
     export AWS_PROFILE=$profile 
     export AWS_REGION=ap-southeast-2
