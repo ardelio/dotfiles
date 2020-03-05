@@ -7,11 +7,23 @@ case $profile in
     echo Your current session is configured as:
     printf " • AWS_PROFILE:\t${AWS_PROFILE:-not set}\n"
     printf " • AWS_REGION:\t${AWS_REGION:-not set}\n"
+    printf " • AWS_DEFAULT_REGION:\t${AWS_DEFAULT_REGION:-not set}\n"
     ;;
   stax-vms | stax-vms-client-monitoring)
-    export AWS_PROFILE=$profile 
-    export AWS_REGION=ap-southeast-2
+    region=ap-southeast-2
+    title "AWS_PROFILE: $profile, AWS_REGION: $region"
+    export AWS_PROFILE=$profile
+    export AWS_REGION=$region
+    export AWS_DEFAULT_REGION=$region
     saml2aws login -a $profile
+    ;;
+  nswlrs-cloudnative-nonprod | nswlrs-cloudops-nonprod | nswlrs-cloudops-build)
+    region=ap-southeast-2
+    title "AWS_PROFILE: $profile, AWS_REGION: $region"
+    export AWS_PROFILE=$profile
+    export AWS_REGION=$region
+    export AWS_DEFAULT_REGION=$region
+    aws-azure-login --profile $profile
     ;;
   *)
     aws_config_profiles=$(cat ~/.aws/config | grep '\[.*\]' | sed 's/profile //' | sed 's/\[\(.*\)\]/ • \1/' | sort)
