@@ -17,7 +17,7 @@ case $profile in
     export AWS_DEFAULT_REGION=$region
     saml2aws login -a $profile
     ;;
-  nswlrs-cloudnative-nonprod | nswlrs-cloudops-nonprod | nswlrs-cloudops-build)
+  nswlrs-cloudnative-nonprod | nswlrs-cloudops-nonprod | nswlrs-cloudops-build | nswlrs-cloudops-prod | nswlrs-cloudnative-prod)
     region=ap-southeast-2
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
@@ -26,12 +26,13 @@ case $profile in
     aws-azure-login --profile $profile
     ;;
   *)
-    aws_config_profiles=$(cat ~/.aws/config | grep '\[.*\]' | sed 's/profile //' | sed 's/\[\(.*\)\]/ • \1/' | sort)
-    aws_credentials_profiles=$(cat ~/.aws/credentials | grep '\[.*\]' | sed 's/\[\(.*\)\]/• \1/' | sort)
+    aws_config_profiles=$(cat ~/.aws/config | grep '\[.*\]' | sed 's/profile //' | sed 's/\[\(.*\)\]/\1/' | sort)
+    aws_credentials_profiles=$(cat ~/.aws/credentials | grep '\[.*\]' | sed 's/\[\(.*\)\]/\1/' | sort)
+    combined_profiles=$(printf "$aws_config_profiles\n$aws_credentials_profiles" | sort |uniq)
     echo "Error: unknown AWS Profile"
-    printf "\nProfiles found in ~/.aws/config:\n"
-    echo $aws_config_profiles
-    printf "\nProfiles found in ~/.aws.credentials:\n"
-    echo $aws_credentials_profiles
+    printf "\nProfiles found in ~/.aws:\n"
+    for combined_profile in $combined_profiles; do
+      printf "\t• $combined_profile\n"
+    done
     ;;
 esac
