@@ -9,6 +9,13 @@ case $profile in
     printf " • AWS_REGION:\t${AWS_REGION:-not set}\n"
     printf " • AWS_DEFAULT_REGION:\t${AWS_DEFAULT_REGION:-not set}\n"
     ;;
+  ardelio)
+    region=ap-southeast-2
+    title "AWS_PROFILE: $profile, AWS_REGION: $region"
+    export AWS_PROFILE=$profile
+    export AWS_REGION=$region
+    export AWS_DEFAULT_REGION=$region
+    ;;
   stax-vms | stax-vms-client-monitoring)
     region=ap-southeast-2
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
