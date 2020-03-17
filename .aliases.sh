@@ -1,21 +1,14 @@
-alias et='code .'
-alias ls='ls -G'
-alias ll='ls -alGh'
-
-alias vi='title $(basename $(pwd)) && nvim'
-alias vim='vi'
-alias grep='egrep --color=auto'
-
-alias be='bundle exec'
-alias ber='bundle exec rails'
-
 alias dotfiles='cd ~/.dotfiles'
-
+alias grep='egrep --color=auto'
 alias http_server='python -m SimpleHTTPServer 8888'
-alias gitx='/Applications/GitX.app/Contents/Resources/gitx'
-
+alias ll='ls -alGh'
+alias ls='ls -G'
 alias tm='tmux list-sessions && tmux attach || tmux'
 alias tmls='tmux list-sessions'
+alias vi='nvim'
+alias vim='vi'
+
+function del()  {mv $@ ${HOME}/.bin;}
 function tmks() {tmux kill-session -t $@;}
 function tmns() {tmux new -s $@;}
 function tmas() {tmux attach-session -t $@;}
