@@ -8,7 +8,7 @@ alias tmls='tmux list-sessions'
 alias vi='nvim'
 alias vim='vi'
 
-function del()  {mv $@ ${HOME}/.bin;}
+function del()  {mv $@ ${HOME}/.Trash;}
 function tmks() {tmux kill-session -t $@;}
 function tmns() {tmux new -s $@;}
 function tmas() {tmux attach-session -t $@;}
