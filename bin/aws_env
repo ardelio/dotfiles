@@ -16,7 +16,7 @@ case $profile in
     export AWS_REGION=$region
     export AWS_DEFAULT_REGION=$region
     ;;
-  stax-vms | stax-vms-client-monitoring)
+  stax-vms | stax-vms-client-app | stax-vms-client-monitoring)
     region=ap-southeast-2
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
