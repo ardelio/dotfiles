@@ -18,19 +18,19 @@ case $profile in
     ;;
   stax-vms | stax-vms-client-app | stax-vms-client-monitoring)
     region=ap-southeast-2
+    saml2aws login -a $profile
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
     export AWS_REGION=$region
     export AWS_DEFAULT_REGION=$region
-    saml2aws login -a $profile
     ;;
   nswlrs-cloudnative-nonprod | nswlrs-cloudops-nonprod | nswlrs-cloudops-build | nswlrs-cloudops-prod | nswlrs-cloudnative-prod)
     region=ap-southeast-2
+    aws-azure-login --profile $profile
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
     export AWS_REGION=$region
     export AWS_DEFAULT_REGION=$region
-    aws-azure-login --profile $profile
     ;;
   *)
     aws_config_profiles=$(cat ~/.aws/config | grep '\[.*\]' | sed 's/profile //' | sed 's/\[\(.*\)\]/\1/' | sort)
