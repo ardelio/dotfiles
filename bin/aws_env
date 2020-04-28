@@ -16,9 +16,17 @@ case $profile in
     export AWS_REGION=$region
     export AWS_DEFAULT_REGION=$region
     ;;
-  stax-vms | stax-vms-client-app | stax-vms-client-monitoring)
+  stax-vms-monitoring-core)
     region=ap-southeast-2
     saml2aws login -a $profile
+    title "AWS_PROFILE: $profile, AWS_REGION: $region"
+    export AWS_PROFILE=$profile
+    export AWS_REGION=$region
+    export AWS_DEFAULT_REGION=$region
+    ;;
+  rest-material-nonprod | rest-material-prod)
+    region=ap-southeast-2
+    saml2aws login -a rest
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
     export AWS_REGION=$region
