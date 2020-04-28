@@ -82,9 +82,13 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 363 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 877 0 0 1440 900 </string>
+	<string>-252 923 1920 1034 -252 900 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>176 19 570 452 0 0 1440 877 </string>
+	<string>-252 1477 955 503 -252 900 1920 1057 </string>
+	<key>NeverWarnAboutShortLivedSessions_531CFDBE-4D7A-450F-9B28-057D9D01CFD1</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_531CFDBE-4D7A-450F-9B28-057D9D01CFD1_selection</key>
+	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -738,7 +742,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>16617302-D91B-45E2-83A7-4832B243F1B2</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>8</integer>
+	<integer>15</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1455,6 +1459,10 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NoSyncSuppressBroadcastInputWarning</key>
+	<true/>
+	<key>NoSyncSuppressBroadcastInputWarning_selection</key>
+	<integer>0</integer>
 	<key>NoSyncTipOfTheDayEligibilityBeganTime</key>
 	<real>602986854.44058704</real>
 	<key>OpenBookmark</key>
@@ -1509,7 +1517,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-03-04T22:56:08Z</date>
+	<date>2020-04-19T23:26:51Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
