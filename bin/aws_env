@@ -34,11 +34,16 @@ case $profile in
     ;;
   nswlrs-services-prod | nswlrs-cloudnative-nonprod | nswlrs-cloudops-nonprod | nswlrs-cloudops-build | nswlrs-cloudops-prod | nswlrs-cloudnative-prod)
     region=ap-southeast-2
-    aws-azure-login --profile $profile
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
     export AWS_REGION=$region
     export AWS_DEFAULT_REGION=$region
+    STS_CALL=$(aws sts get-caller-identity 2>&1 | grep -o 'ExpiredToken')
+    if [ "$STS_CALL" = "ExpiredToken" ]; then
+      aws-azure-login --profile $profile
+    else
+      echo "Credentials not expired."
+    fi
     ;;
   *)
     aws_config_profiles=$(cat ~/.aws/config | grep '\[.*\]' | sed 's/profile //' | sed 's/\[\(.*\)\]/\1/' | sort)
