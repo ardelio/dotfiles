@@ -38,8 +38,8 @@ case $profile in
     export AWS_PROFILE=$profile
     export AWS_REGION=$region
     export AWS_DEFAULT_REGION=$region
-    STS_CALL=$(aws sts get-caller-identity 2>&1 | grep -o 'ExpiredToken')
-    if [ "$STS_CALL" = "ExpiredToken" ]; then
+    STS_CALL=$(aws sts get-caller-identity 2>&1 | grep -o '"Account"')
+    if [[ "$STS_CALL" != '"Account"' ]]; then
       aws-azure-login --profile $profile
     else
       echo "Credentials not expired."
