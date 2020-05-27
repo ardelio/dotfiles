@@ -11,7 +11,6 @@ set linebreak
 set backspace=indent,eol,start
 set number
 set ignorecase
-set relativenumber
 set autoread
 set noreadonly
 set splitright
