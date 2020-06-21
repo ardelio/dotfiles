@@ -14,7 +14,7 @@
   pr = pull --rebase
   sl = shortlog -ns
 [core]
-  editor = nvim
+  editor = vim
   trustExitCode = true
   excludesfile = ~/.gitignore_global
 [push]
