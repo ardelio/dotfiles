@@ -9,7 +9,7 @@ case $profile in
     printf " • AWS_REGION:\t${AWS_REGION:-not set}\n"
     printf " • AWS_DEFAULT_REGION:\t${AWS_DEFAULT_REGION:-not set}\n"
     ;;
-  ardelio)
+  ardelio | aarnet | versent-cloudops)
     region=ap-southeast-2
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
