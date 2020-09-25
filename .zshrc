@@ -49,7 +49,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
-export PATH="$HOME/Library/Python/3.8/bin:$HOME/Library/Python/3.7/bin:$HOME/Library/Python/2.7/bin:$PATH"
+export PATH="$HOME/Library/Python/3.8/bin:$HOME/Library/Python/2.7/bin:$PATH"
 export PATH=/Users/asceresini/code/vms/vms2aws/bin:$PATH
 
 export N_PREFIX=$HOME/.n
