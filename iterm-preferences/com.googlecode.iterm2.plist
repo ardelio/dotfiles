@@ -447,7 +447,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>1410 768 620 392 0 0 3440 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1721 23 1718 1394 0 0 3440 1417 </string>
+	<string>0 0 1440 877 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1282 298 570 452 0 0 3440 1417 </string>
 	<key>NeverWarnAboutShortLivedSessions_531CFDBE-4D7A-450F-9B28-057D9D01CFD1</key>
@@ -1929,7 +1929,7 @@
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1440, 900}}</string>
 		<key>topLeft</key>
-		<string>{269, 595}</string>
+		<string>{440, 571}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
@@ -2711,7 +2711,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-10-05T22:10:33Z</date>
+	<date>2020-10-10T10:55:52Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
@@ -2730,6 +2730,8 @@
 	<false/>
 	<key>SuppressRestartAnnouncement</key>
 	<true/>
+	<key>TabStyleWithAutomaticOption</key>
+	<integer>5</integer>
 	<key>UseBorder</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>
