@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PLUGINS="ag awscli:aws awslogs bat coreutils diff-so-fancy entr fd fpp git-remote-codecommit glances httpie hub jq pt python2 python3 rbenv tree watch z"
+PLUGINS="ag awscli:aws awslogs bat coreutils diff-so-fancy entr fd fpp git-remote-codecommit glances httpie hub jq pt python2 python3 rbenv tfenv tree watch z"
 
 for plugin in $PLUGINS; do
     IFS=':' read -ra ADDR <<< "$plugin"
