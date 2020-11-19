@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 profile=$1
+region=${2:-ap-southeast-2}
 
 case $profile in
   ls)
@@ -9,41 +10,11 @@ case $profile in
     printf " • AWS_REGION:\t${AWS_REGION:-not set}\n"
     printf " • AWS_DEFAULT_REGION:\t${AWS_DEFAULT_REGION:-not set}\n"
     ;;
-  ardelio | aarnet-root | versent-cloudops)
-    region=ap-southeast-2
+  ardelio | propeller-development | propeller-production | propeller-anthonysceresini )
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
     export AWS_REGION=$region
     export AWS_DEFAULT_REGION=$region
-    ;;
-  stax-vms-monitoring-core | stax-vms-monitoring-example-client-monitoring | stax-vms-monitoring-example-client-services | versent | vff | vff-torque-momentum-prod | vff-cloudops-nonprod | vff-cloudops-prod | vff-ipaas-nonprod | vff-ipaas-prod)
-    region=ap-southeast-2
-    saml2aws login -a $profile
-    title "AWS_PROFILE: $profile, AWS_REGION: $region"
-    export AWS_PROFILE=$profile
-    export AWS_REGION=$region
-    export AWS_DEFAULT_REGION=$region
-    ;;
-  rest-workload-nonprod | rest-workload-prod | rest-sandbox)
-    region=ap-southeast-2
-    saml2aws login -a rest
-    title "AWS_PROFILE: $profile, AWS_REGION: $region"
-    export AWS_PROFILE=$profile
-    export AWS_REGION=$region
-    export AWS_DEFAULT_REGION=$region
-    ;;
-  nswlrs-services-prod | nswlrs-cloudnative-nonprod | nswlrs-cloudops-nonprod | nswlrs-cloudops-build | nswlrs-cloudops-prod | nswlrs-cloudnative-prod)
-    region=ap-southeast-2
-    title "AWS_PROFILE: $profile, AWS_REGION: $region"
-    export AWS_PROFILE=$profile
-    export AWS_REGION=$region
-    export AWS_DEFAULT_REGION=$region
-    STS_CALL=$(aws sts get-caller-identity 2>&1 | grep -o '"Account"')
-    if [[ "$STS_CALL" != '"Account"' ]]; then
-      aws-azure-login --profile $profile
-    else
-      echo "Credentials not expired."
-    fi
     ;;
   *)
     aws_config_profiles=$(cat ~/.aws/config | grep '\[.*\]' | sed 's/profile //' | sed 's/\[\(.*\)\]/\1/' | sort)
