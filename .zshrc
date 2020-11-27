@@ -23,6 +23,7 @@ antigen theme bhilburn/powerlevel9k powerlevel9k
 antigen apply
 
 [ -f ~/.dotfiles/.aliases.sh ] && source ~/.dotfiles/.aliases.sh
+[ -f ~/.propeller.aliases.sh ] && source ~/.propeller.aliases.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export POWERLEVEL9K_MODE='awesome-fontconfig'
@@ -119,3 +120,6 @@ fi
 [[ -s "/usr/local/etc/profile.d/z.sh" ]] && . /usr/local/etc/profile.d/z.sh
 
 hash rbenv && eval "$(rbenv init -)"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
+
