@@ -56,6 +56,8 @@ export PATH=/Users/asceresini/code/vms/vms2aws/bin:$PATH
 export N_PREFIX=$HOME/.n
 export PATH=$N_PREFIX/bin:$PATH
 export AWS_PAGER=
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 ###-begin-npm-completion-###
 #
@@ -126,4 +128,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
+
