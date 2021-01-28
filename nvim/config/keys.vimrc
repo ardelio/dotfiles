@@ -23,3 +23,7 @@ map <leader>n <plug>NERDTreeTabsToggle<CR>
 
 " Platinum Searcher
 nmap // :Pt! <C-R><C-W><CR>
+
+" Emojis
+map <Leader>e :%s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g<CR>
+
