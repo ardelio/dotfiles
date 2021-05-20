@@ -17,11 +17,21 @@
   editor = /usr/local/bin/nvim
   trustExitCode = true
   excludesfile = ~/.gitignore_global
+  pagers = delta
 [push]
   default = current
+[delta]
+  features = side-by-side line-numbers decorations
+  whitespace-error-style = 22 reverse
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
+[interactive]
+  diffFilter = delta --color-only
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true

@@ -9,6 +9,7 @@ alias vi='nvim'
 alias vim='vi'
 alias cat='bat'
 alias top='glances'
+alias randomAlphaNum='date | md5sum | head -c 12'
 
 function del()  {mv $@ ${HOME}/.Trash;}
 function tmks() {tmux kill-session -t $@;}
