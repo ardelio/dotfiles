@@ -9,7 +9,7 @@ let g:airline_left_alt_sep = '|'
 let g:airline_right_sep = ' '
 let g:airline_right_alt_sep = '|'
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'night_owl'
+let g:airline_theme = 'nord_minimal'
 
 let g:deoplete#enable_at_startup = 1
 
