@@ -3,6 +3,13 @@
 profile=$1
 region=${2:-ap-southeast-2}
 
+function clean_environment() {
+    echo Cleaning environment
+    unset AWS_PROFILE
+    unset AWS_REGION
+    unset AWS_DEFAULT_REGION
+}
+
 case $profile in
   ls)
     echo Your current session is configured as:
@@ -10,7 +17,16 @@ case $profile in
     printf " • AWS_REGION:\t${AWS_REGION:-not set}\n"
     printf " • AWS_DEFAULT_REGION:\t${AWS_DEFAULT_REGION:-not set}\n"
     ;;
-  ardelio | propeller-development | propeller-production | propeller-anthonysceresini )
+  rm)
+    clean_environment
+    ;;
+  sso)
+    clean_environment
+    echo Logging in via Propeller SSO
+    aws sso login
+    ;;
+
+  data-account | development-account | production-account )
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
     export AWS_REGION=$region
