@@ -132,3 +132,5 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
+export PATH="${PATH}:${HOME}/.krew/bin"
+export PATH=$PATH:~/.kube/plugins/jordanwilson230
