@@ -1,5 +1,6 @@
 DISABLE_AUTO_TITLE="true"
 
+source ~/.zprofile
 source ~/.antigen.zsh
 
 # Load the oh-my-zsh's library.
