@@ -49,20 +49,20 @@ alias dki="docker run -i -t -P"
 # Stop all containers
 dstop() { [[ -n $1 ]] && docker stop $@ || docker stop $(docker ps -a -q);}
 
-# Remove container or all containers
-drm() { [[ -n $1 ]] && docker rm $@ || docker rm $(docker ps -a -q); }
+# # Remove container or all containers
+# drm() { [[ -n $1 ]] && docker rm $@ || docker rm $(docker ps -a -q);}
 
-# Stop and Remove all containers
-alias drmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
+# # Stop and Remove all containers
+# alias drmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 
-# Remove images or all image
-drmi() { [[ -n $1 ]] && docker rmi $@ || docker rmi $(docker images -q); }
+# # Remove images or all image
+# drmi() { [[ -n $1 ]] && docker rmi $@ || docker rmi $(docker images -q); }
 
-# Dockerfile build, e.g., $dbu tcnksm/test
-dbu() { docker build -t=$1 .; }
+# # Dockerfile build, e.g., $dbu tcnksm/test
+# dbu() { docker build -t=$1 .; }
 
-# Show all alias related docker
-dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort;}
+# # Show all alias related docker
+# dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort;}
 
-# docker-compose
-alias dc="docker-compose"
+# # docker-compose
+# alias dc="docker-compose"

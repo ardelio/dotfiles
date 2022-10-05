@@ -8,6 +8,11 @@ function clean_environment() {
     unset AWS_PROFILE
     unset AWS_REGION
     unset AWS_DEFAULT_REGION
+    unset AWS_SECRET_ACCESS_KEY
+    unset AWS_SESSION_TOKEN
+    unset AWS_ACCESS_KEY_ID
+    echo AWS env is now:
+    env | grep AWS
 }
 
 case $profile in
