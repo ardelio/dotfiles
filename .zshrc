@@ -46,6 +46,8 @@ export POWERLEVEL9K_STATUS_OK_FOREGROUND='magenta'
 export POWERLEVEL9K_STATUS_ERROR_BACKGROUND='magenta'
 export POWERLEVEL9K_STATUS_ERROR_FOREGROUND='black'
 
+export TERM="xterm-256color"
+
 export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
