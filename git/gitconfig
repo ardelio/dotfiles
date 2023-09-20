@@ -14,8 +14,8 @@
   pr = pull --rebase
   sl = shortlog -ns
 [core]
-  #editor = /usr/local/bin/nvim
-  editor = /home/linuxbrew/.linuxbrew/bin/nvim
+  editor = /usr/local/bin/nvim
+  #editor = /home/linuxbrew/.linuxbrew/bin/nvim
   trustExitCode = true
   excludesfile = ~/.gitignore_global
   pager = delta

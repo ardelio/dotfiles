@@ -1,6 +1,5 @@
 DISABLE_AUTO_TITLE="true"
 
-source ~/.zprofile
 source ~/.antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -137,3 +136,6 @@ fi
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 export PATH="${PATH}:${HOME}/.krew/bin"
 export PATH=$PATH:~/.kube/plugins/jordanwilson230
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+. $HOME/.cargo/env
