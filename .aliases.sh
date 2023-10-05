@@ -10,6 +10,7 @@ alias vim='vi'
 alias cat='bat'
 alias top='glances'
 alias randomAlphaNum='date | md5sum | head -c 12'
+alias githash='git l | head -1 | awk "{print $2}"'
 
 function del()  {mv $@ ${HOME}/.Trash;}
 function tmks() {tmux kill-session -t $@;}
