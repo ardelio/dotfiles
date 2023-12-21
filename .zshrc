@@ -139,4 +139,3 @@ export PATH=$PATH:~/.kube/plugins/jordanwilson230
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 [ -f ~/.cargo/env ] && . ~/.cargo/env
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
