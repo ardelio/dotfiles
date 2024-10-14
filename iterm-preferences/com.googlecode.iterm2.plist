@@ -11,7 +11,7 @@
 	<key>AlternateMouseScroll</key>
 	<true/>
 	<key>Command</key>
-	<string></string>
+	<string>/opt/homebrew/bin/zsh</string>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>base16-tomorrow.dark.256</key>

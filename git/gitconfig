@@ -15,8 +15,7 @@
   sl = shortlog -ns
 [core]
   abbrev = 8
-  editor = /usr/local/bin/nvim
-  #editor = /home/linuxbrew/.linuxbrew/bin/nvim
+  editor = /opt/homebrew/bin/nvim
   trustExitCode = true
   excludesfile = ~/.gitignore_global
   pager = delta

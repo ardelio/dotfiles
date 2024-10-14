@@ -31,4 +31,4 @@ set shiftwidth=2
 set expandtab
 set smarttab
 set mouse=a
-set shell=/usr/local/bin/zsh
+set shell=/opt/homebrew/bin/zsh

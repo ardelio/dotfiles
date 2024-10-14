@@ -24,7 +24,10 @@ antigen apply
 
 [ -f ~/.dotfiles/.aliases.sh ] && source ~/.dotfiles/.aliases.sh
 [ -f ~/.propeller.aliases.sh ] && source ~/.propeller.aliases.sh
+[ -f ~/.secrets/general.sh ] && source ~/.secrets/general.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+. /opt/homebrew/etc/profile.d/z.sh
+
 
 export POWERLEVEL9K_MODE='awesome-fontconfig'
 # export POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="🧟"
@@ -57,6 +60,7 @@ export PATH=/Users/asceresini/code/vms/vms2aws/bin:$PATH
 
 export N_PREFIX=$HOME/.n
 export PATH=$N_PREFIX/bin:$PATH
+export PATH=`yarn global bin`:$PATH
 export AWS_PAGER=
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -121,8 +125,6 @@ fi
 
 [[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
 
-[[ -s "/usr/local/etc/profile.d/z.sh" ]] && . /usr/local/etc/profile.d/z.sh
-
 hash rbenv && eval "$(rbenv init -)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
@@ -139,3 +141,6 @@ export PATH=$PATH:~/.kube/plugins/jordanwilson230
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 [ -f ~/.cargo/env ] && . ~/.cargo/env
+
+# Created by `pipx` on 2024-06-16 05:01:31
+export PATH="$PATH:/Users/anthonysceresini/.local/bin"
