@@ -11,7 +11,7 @@ alias cat='bat'
 alias top='glances'
 alias randomAlphaNum='date | md5sum | head -c 12'
 alias githash="git l | head -1 | awk '{print \$2}'"
-alias gitclean="git b | grep -v \"^\* $(git symbolic-ref refs/remotes/origin/HEAD | sed 's/.*\///')\" | xargs git b -D"
+alias gitwipebranches="git b | grep -v \"^\* $(git symbolic-ref refs/remotes/origin/HEAD | sed 's/.*\///')\" | xargs git b -D"
 
 function del()  {mv $@ ${HOME}/.Trash;}
 function tmks() {tmux kill-session -t $@;}
