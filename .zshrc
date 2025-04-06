@@ -3,9 +3,10 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+
+export N_PREFIX=$HOME/.n
+export PATH=$N_PREFIX/bin:$PATH
+export PATH="$(cd ~ && yarn global bin):$PATH"
 
 DISABLE_AUTO_TITLE="true"
 
@@ -32,13 +33,6 @@ antigen theme romkatv/powerlevel10k
 
 antigen apply
 
-[ -f ~/.dotfiles/.aliases.sh ] && source ~/.dotfiles/.aliases.sh
-[ -f ~/.propeller.aliases.sh ] && source ~/.propeller.aliases.sh
-[ -f ~/.secrets/general.sh ] && source ~/.secrets/general.sh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-. /opt/homebrew/etc/profile.d/z.sh
-
-
 export POWERLEVEL9K_MODE='awesome-fontconfig'
 export POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="🧟"
 export POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="🧟 "
@@ -58,6 +52,19 @@ export POWERLEVEL9K_STATUS_OK_FOREGROUND='magenta'
 export POWERLEVEL9K_STATUS_ERROR_BACKGROUND='magenta'
 export POWERLEVEL9K_STATUS_ERROR_FOREGROUND='black'
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+[ -f ~/.dotfiles/.aliases.sh ] && source ~/.dotfiles/.aliases.sh
+[ -f ~/.propeller.aliases.sh ] && source ~/.propeller.aliases.sh
+[ -f ~/.secrets/general.sh ] && source ~/.secrets/general.sh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+. /opt/homebrew/etc/profile.d/z.sh
+
 export TERM="xterm-256color"
 
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
@@ -70,9 +77,6 @@ export PATH="$HOME/.jenv/bin:$PATH"
 export PATH="$HOME/Library/Python/3.8/bin:$HOME/Library/Python/2.7/bin:$PATH"
 export PATH=/Users/asceresini/code/vms/vms2aws/bin:$PATH
 
-export N_PREFIX=$HOME/.n
-export PATH=$N_PREFIX/bin:$PATH
-export PATH="$(cd ~ && yarn global bin):$PATH"
 export AWS_PAGER=
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -158,8 +162,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Created by `pipx` on 2024-06-16 05:01:31
 export PATH="$PATH:/Users/anthonysceresini/.local/bin"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+
