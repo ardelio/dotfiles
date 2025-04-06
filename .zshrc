@@ -1,3 +1,5 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -58,6 +60,8 @@ export POWERLEVEL9K_STATUS_ERROR_FOREGROUND='black'
 
 export TERM="xterm-256color"
 
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+
 export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
@@ -68,10 +72,12 @@ export PATH=/Users/asceresini/code/vms/vms2aws/bin:$PATH
 
 export N_PREFIX=$HOME/.n
 export PATH=$N_PREFIX/bin:$PATH
-export PATH=`yarn global bin`:$PATH
+export PATH="$(cd ~ && yarn global bin):$PATH"
 export AWS_PAGER=
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+
+source ~/.pyvenv/bin/activate
 
 ###-begin-npm-completion-###
 #
@@ -145,7 +151,6 @@ fi
 
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 export PATH="${PATH}:${HOME}/.krew/bin"
-export PATH=$PATH:~/.kube/plugins/jordanwilson230
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 [ -f ~/.cargo/env ] && . ~/.cargo/env
@@ -155,3 +160,6 @@ export PATH="$PATH:/Users/anthonysceresini/.local/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

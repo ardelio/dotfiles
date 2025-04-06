@@ -31,7 +31,7 @@ case $profile in
     aws sso login
     ;;
 
-  propeller-anthonysceresini | data-account | development-account | production-account | production-account-licensing )
+  propeller-anthonysceresini | data-account | development-account | devops-account | production-account | production-account-licensing )
     title "AWS_PROFILE: $profile, AWS_REGION: $region"
     export AWS_PROFILE=$profile
     export AWS_REGION=$region

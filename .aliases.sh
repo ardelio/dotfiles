@@ -52,7 +52,7 @@ alias dki="docker run -i -t -P"
 dstop() { [[ -n $1 ]] && docker stop $@ || docker stop $(docker ps -a -q);}
 
 # # Remove container or all containers
-# drm() { [[ -n $1 ]] && docker rm $@ || docker rm $(docker ps -a -q);}
+drmc() { [[ -n $1 ]] && docker rm $@ || docker rm $(docker ps -a -q);}
 
 # # Stop and Remove all containers
 # alias drmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'

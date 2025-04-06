@@ -16,3 +16,18 @@ for plugin in $PLUGINS; do
     fi
 done
 
+CASK_PLUGINS="maccy"
+
+for plugin in $CASK_PLUGINS; do
+    IFS=':' read -ra ADDR <<< "$plugin"
+    BREW_PLUGIN_NAME=${ADDR[0]}
+    COMMAND=${ADDR[1]:-${ADDR[0]}}
+    IFS=' ' # Reset to default
+
+    if which $COMMAND; then
+        echo $COMMAND installed
+    else
+        echo $COMMAND not found...installing
+        brew install --cask $BREW_PLUGIN_NAME
+    fi
+done
