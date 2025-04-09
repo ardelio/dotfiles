@@ -77,7 +77,7 @@ export PATH="$HOME/.jenv/bin:$PATH"
 export PATH="$HOME/Library/Python/3.8/bin:$HOME/Library/Python/2.7/bin:$PATH"
 export PATH=/Users/asceresini/code/vms/vms2aws/bin:$PATH
 
-export AWS_PAGER=
+export AWS_PAGER=""
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 
