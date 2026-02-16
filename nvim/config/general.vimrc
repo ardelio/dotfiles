@@ -32,3 +32,5 @@ set expandtab
 set smarttab
 set mouse=a
 set shell=/opt/homebrew/bin/zsh
+set spell spelllang=en_au
+

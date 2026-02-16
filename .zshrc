@@ -1,12 +1,7 @@
-# Amazon Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-
 export N_PREFIX=$HOME/.n
 export PATH=$N_PREFIX/bin:$PATH
 export PATH="$(cd ~ && yarn global bin):$PATH"
+export LOCAL_DEVELOPER_MACHINE=1
 
 DISABLE_AUTO_TITLE="true"
 
@@ -28,36 +23,7 @@ antigen bundle brew
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 
-# antigen theme bhilburn/powerlevel9k powerlevel9k
-antigen theme romkatv/powerlevel10k
-
 antigen apply
-
-export POWERLEVEL9K_MODE='awesome-fontconfig'
-export POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="🧟"
-export POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="🧟 "
-export POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
-export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
-export POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='black'
-export POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='092'
-export POWERLEVEL9K_DIR_HOME_BACKGROUND='black'
-export POWERLEVEL9K_DIR_HOME_FOREGROUND='092'
-export POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='black'
-export POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='092'
-export POWERLEVEL9K_TIME_BACKGROUND='black'
-export POWERLEVEL9K_TIME_FOREGROUND='magenta'
-export POWERLEVEL9K_STATUS_OK_BACKGROUND='black'
-export POWERLEVEL9K_STATUS_OK_FOREGROUND='magenta'
-export POWERLEVEL9K_STATUS_ERROR_BACKGROUND='magenta'
-export POWERLEVEL9K_STATUS_ERROR_FOREGROUND='black'
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 [ -f ~/.dotfiles/.aliases.sh ] && source ~/.dotfiles/.aliases.sh
 [ -f ~/.propeller.aliases.sh ] && source ~/.propeller.aliases.sh
@@ -78,10 +44,11 @@ export PATH="$HOME/Library/Python/3.8/bin:$HOME/Library/Python/2.7/bin:$PATH"
 export PATH=/Users/asceresini/code/vms/vms2aws/bin:$PATH
 
 export AWS_PAGER=""
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
 
-source ~/.pyvenv/bin/activate
+# source ~/.pyvenv/bin/activate
 
 ###-begin-npm-completion-###
 #
@@ -145,6 +112,7 @@ fi
 
 hash rbenv && eval "$(rbenv init -)"
 
+
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
 
 
@@ -162,6 +130,12 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Created by `pipx` on 2024-06-16 05:01:31
 export PATH="$PATH:/Users/anthonysceresini/.local/bin"
 
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+# keep at the end of the file
+# Load starship prompt
+eval "$(starship init zsh)"
 
+if [ -e '/etc/bash.bashrc' ]; then
+  . '/etc/bash.bashrc'
+fi
+
+export PATH=$PATH:~/Library/Android/sdk/platform-tools

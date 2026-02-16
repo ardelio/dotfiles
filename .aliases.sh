@@ -1,6 +1,6 @@
 alias dotfiles='cd ~/.dotfiles'
 alias grep='egrep --color=auto'
-alias http_server='python -m SimpleHTTPServer 8888'
+alias http_server='python3 -m http.server 8000'
 alias ll='ls -alGh'
 alias ls='ls -G'
 alias tm='tmux list-sessions && tmux attach || tmux'
@@ -12,6 +12,7 @@ alias top='glances'
 alias randomAlphaNum='date | md5sum | head -c 12'
 alias githash="git l | head -1 | awk '{print \$2}'"
 alias gitwipebranches="git b | grep -v \"^\* $(git symbolic-ref refs/remotes/origin/HEAD | sed 's/.*\///')\" | xargs git b -D"
+alias ssh_pi="ssh anthonysceresini@pi5.local"
 
 function del()  {mv $@ ${HOME}/.Trash;}
 function tmks() {tmux kill-session -t $@;}
@@ -68,3 +69,24 @@ drmc() { [[ -n $1 ]] && docker rm $@ || docker rm $(docker ps -a -q);}
 
 # # docker-compose
 # alias dc="docker-compose"
+
+# Alias to use when monitor preferences need to be reset. For instance, sometimes the Acer Predator
+# stops connecting as an external monitor
+function reset_monitor() {
+  sudo rm /Library/Preferences/com.apple.windowserver.displays.plist;
+  rm ~/Library/Preferences/ByHost/com.apple.windowserver.*.plist
+  echo Now, make sure you restart the machine!
+}
+
+function worktree() {
+  local branch="$1"
+  
+  if [ -z "$branch" ]; then
+    echo "Error: Branch is required" >&2
+    exit 1
+  fi
+  
+  echo "Setting up worktree for branch: $branch"
+  git worktree add -b $branch ./worktrees/$branch
+  code ./worktrees/$branch
+}
