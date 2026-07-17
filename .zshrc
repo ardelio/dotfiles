@@ -1,6 +1,10 @@
+# ~/.zshrc
+
+# --- Node (n) + yarn ---
 export N_PREFIX=$HOME/.n
 export PATH=$N_PREFIX/bin:$PATH
-export PATH="$(cd ~ && yarn global bin):$PATH"
+export PATH="$HOME/.yarn/bin:$PATH"   # was: $(cd ~ && yarn global bin) — hardcoded to skip the per-startup subshell
+
 export LOCAL_DEVELOPER_MACHINE=1
 
 DISABLE_AUTO_TITLE="true"
@@ -31,24 +35,19 @@ antigen apply
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 . /opt/homebrew/etc/profile.d/z.sh
 
-export TERM="xterm-256color"
-
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
-export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
+# --- PATH ---
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
-export PATH="$HOME/.jenv/bin:$PATH"
-export PATH="$HOME/Library/Python/3.8/bin:$HOME/Library/Python/2.7/bin:$PATH"
-export PATH=/Users/asceresini/code/vms/vms2aws/bin:$PATH
+export PATH="/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$PATH:$HOME/.local/bin"   # pipx
+export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
 
 export AWS_PAGER=""
-# export PYENV_ROOT="$HOME/.pyenv"
-# export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
 
-# source ~/.pyvenv/bin/activate
+[ -f ~/.cargo/env ] && . ~/.cargo/env
 
 ###-begin-npm-completion-###
 #
@@ -108,34 +107,12 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-npm-completion-###
 
-[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
-
-hash rbenv && eval "$(rbenv init -)"
-
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
 
-
 if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
 fi
-
-export PATH="/usr/local/opt/sqlite/bin:$PATH"
-export PATH="${PATH}:${HOME}/.krew/bin"
-export PATH="/usr/local/opt/openjdk/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-[ -f ~/.cargo/env ] && . ~/.cargo/env
-
-# Created by `pipx` on 2024-06-16 05:01:31
-export PATH="$PATH:/Users/anthonysceresini/.local/bin"
 
 # keep at the end of the file
 # Load starship prompt
 eval "$(starship init zsh)"
-
-if [ -e '/etc/bash.bashrc' ]; then
-  . '/etc/bash.bashrc'
-fi
-
-export PATH=$PATH:~/Library/Android/sdk/platform-tools

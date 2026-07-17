@@ -11,7 +11,7 @@ alias cat='bat'
 alias top='glances'
 alias randomAlphaNum='date | md5sum | head -c 12'
 alias githash="git l | head -1 | awk '{print \$2}'"
-alias gitwipebranches="git b | grep -v \"^\* $(git symbolic-ref refs/remotes/origin/HEAD | sed 's/.*\///')\" | xargs git b -D"
+alias gitwipebranches="git b | grep -v \"^\* \$(git symbolic-ref refs/remotes/origin/HEAD | sed 's/.*\///')\" | xargs git b -D"
 alias ssh_pi="ssh anthonysceresini@pi5.local"
 
 function del()  {mv $@ ${HOME}/.Trash;}
@@ -80,13 +80,40 @@ function reset_monitor() {
 
 function worktree() {
   local branch="$1"
+  local lowercase_branch=$(echo "$branch" | tr '[:upper:]' '[:lower:]')
   
   if [ -z "$branch" ]; then
     echo "Error: Branch is required" >&2
     exit 1
   fi
+
+  local worktree_base_dir=$HOME/code/.worktrees
+  local project_name=$(basename $PWD)
+  local worktree_dir=$worktree_base_dir/$project_name-$lowercase_branch
+
+  mkdir -p $worktree_dir
   
-  echo "Setting up worktree for branch: $branch"
-  git worktree add -b $branch ./worktrees/$branch
-  code ./worktrees/$branch
+  echo "Setting up worktree for branch ($branch) in $worktree_dir"
+
+  git branch | grep $branch \
+    && git worktree add $worktree_dir $branch \
+    || git worktree add -b $branch $worktree_dir
+  code $worktree_dir
+}
+
+function worktree_rm() {
+  local branch="$1"
+  local lowercase_branch=$(echo "$branch" | tr '[:upper:]' '[:lower:]')
+  
+  if [ -z "$branch" ]; then
+    echo "Error: Branch is required" >&2
+    exit 1
+  fi
+
+  local worktree_base_dir=$HOME/code/.worktrees
+  local project_name=$(basename $PWD)
+  local worktree_dir=$worktree_base_dir/$project_name-$lowercase_branch
+
+  git worktree remove $worktree_dir
+  git branch -D $branch
 }
