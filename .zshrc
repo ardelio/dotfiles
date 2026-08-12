@@ -1,5 +1,9 @@
 # ~/.zshrc
 
+bindkey "^[[1;3D" backward-word
+bindkey "^[[1;3C" forward-word
+
+
 # --- Node (n) + yarn ---
 export N_PREFIX=$HOME/.n
 export PATH=$N_PREFIX/bin:$PATH
@@ -116,3 +120,7 @@ fi
 # keep at the end of the file
 # Load starship prompt
 eval "$(starship init zsh)"
+
+# peon-ping quick controls
+alias peon="bash /Users/anthonysceresini/.claude/hooks/peon-ping/peon.sh"
+[ -f /Users/anthonysceresini/.claude/hooks/peon-ping/completions.bash ] && source /Users/anthonysceresini/.claude/hooks/peon-ping/completions.bash

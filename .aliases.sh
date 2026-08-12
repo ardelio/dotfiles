@@ -13,6 +13,65 @@ alias randomAlphaNum='date | md5sum | head -c 12'
 alias githash="git l | head -1 | awk '{print \$2}'"
 alias gitwipebranches="git b | grep -v \"^\* \$(git symbolic-ref refs/remotes/origin/HEAD | sed 's/.*\///')\" | xargs git b -D"
 alias ssh_pi="ssh anthonysceresini@pi5.local"
+alias herdr_list="herdr agent list | jq '.result.agents[] | { agent, cwd, pane_id }'"
+
+# Attach to the herdr agent running in the current project (git root, or $PWD if
+# not a repo). Prompts if more than one agent matches. Extra args are passed
+# through to `herdr agent attach`, e.g. herdr_attach --takeover
+function herdr_attach() {
+  local project_dir
+  project_dir=$(git rev-parse --show-toplevel 2>/dev/null) || project_dir=$PWD
+  project_dir=${project_dir:-$PWD}
+
+  local agents
+  agents=$(herdr agent list) || {
+    echo "herdr_attach: could not list herdr agents (is the herdr server running?)" >&2
+    return 1
+  }
+
+  local jq_fields='| [.pane_id, .agent, .agent_status, (.terminal_title_stripped // "")] | @tsv'
+  local -a matches
+
+  # Prefer agents sitting exactly in the project dir...
+  matches=("${(@f)$(print -r -- "$agents" | jq -r --arg dir "$project_dir" \
+    ".result.agents[] | select(.cwd == \$dir or .foreground_cwd == \$dir) $jq_fields")}")
+  matches=("${(@)matches:#}")
+
+  # ...otherwise fall back to agents somewhere underneath it.
+  if (( ${#matches[@]} == 0 )); then
+    matches=("${(@f)$(print -r -- "$agents" | jq -r --arg dir "$project_dir" \
+      ".result.agents[] | select((.cwd | startswith(\$dir + \"/\")) or (.foreground_cwd | startswith(\$dir + \"/\"))) $jq_fields")}")
+    matches=("${(@)matches:#}")
+  fi
+
+  if (( ${#matches[@]} == 0 )); then
+    echo "herdr_attach: no herdr agent running in $project_dir" >&2
+    return 1
+  fi
+
+  local line pane agent agent_status title choice
+  if (( ${#matches[@]} > 1 )); then
+    echo "Multiple agents running in $project_dir:"
+    local i=1
+    for line in "${matches[@]}"; do
+      IFS=$'\t' read -r pane agent agent_status title <<< "$line"
+      printf '  %d) %-8s %-8s %-10s %s\n' "$i" "$pane" "$agent" "$agent_status" "$title"
+      (( i++ ))
+    done
+    read "choice?Attach to which one? [1-${#matches[@]}] "
+    if [[ $choice != <-> ]] || (( choice < 1 || choice > ${#matches[@]} )); then
+      echo "herdr_attach: aborted" >&2
+      return 1
+    fi
+    line=${matches[$choice]}
+  else
+    line=${matches[1]}
+  fi
+
+  IFS=$'\t' read -r pane agent agent_status title <<< "$line"
+  echo "Attaching to $agent in $pane${title:+ — $title}"
+  herdr agent attach "$pane" "$@"
+}
 
 function del()  {mv $@ ${HOME}/.Trash;}
 function tmks() {tmux kill-session -t $@;}
