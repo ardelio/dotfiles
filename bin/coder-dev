@@ -1,0 +1,291 @@
+#!/usr/bin/env bash
+#
+# coder-dev — one command to get a Coder remote dev session ready.
+#
+# Starts the workspace if it is stopped, then pushes the things a fresh
+# workspace cannot know about:
+#
+#   • ~/workspace           the dir I clone repos into and open in VS Code
+#   • my git config         included, not copied — see the remote block below
+#   • my own GitHub token   so PRs are raised by me, not the Ziggy bot
+#
+# ...and finally opens VS Code connected to the workspace with ~/workspace as
+# the folder, so there is no File > Open Folder step.
+#
+# Re-runnable at any time; every step is idempotent. Run it again to refresh
+# the GitHub token (gh's OAuth token rotates).
+#
+# Usage:
+#   coder-dev                     # the only running workspace
+#   coder-dev my-workspace-name   # by name (starts it if stopped)
+#   coder-dev --list              # what have I got
+#   coder-dev <name> --no-open    # set up, but don't launch VS Code
+
+set -euo pipefail
+
+CODER_URL="${CODER_URL:-https://coder.devops.propelleraero.com}"
+WORK_DIR_NAME="workspace" # created under $HOME on the workspace
+
+log() { printf '\033[36m[coder-dev]\033[0m %s\n' "$*"; }
+die() {
+    printf '\033[31m[coder-dev]\033[0m %s\n' "$*" >&2
+    exit 1
+}
+
+# --- args -------------------------------------------------------------------
+
+workspace_arg=""
+do_open=true
+do_list=false
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --list | -l) do_list=true ;;
+        --no-open) do_open=false ;;
+        --url)
+            CODER_URL="$2"
+            shift
+            ;;
+        -h | --help)
+            # The header comment block, minus the shebang, is the help text.
+            awk 'NR > 1 && /^#/ { sub(/^# ?/, ""); print; next } NR > 1 { exit }' "$0"
+            exit 0
+            ;;
+        -*) die "unknown flag: $1" ;;
+        *) workspace_arg="$1" ;;
+    esac
+    shift
+done
+
+# --- coder cli --------------------------------------------------------------
+
+# Prefer the binary the VS Code extension downloaded: it is already signed in
+# to this deployment via the macOS keyring, so there is no separate `coder
+# login` to keep alive. A brew-installed `coder` is the fallback.
+coder_host="${CODER_URL#http://}"
+coder_host="${coder_host#https://}"
+bundled="$HOME/Library/Application Support/Code/User/globalStorage/coder.coder-remote/$coder_host/bin/coder-darwin-arm64"
+
+if [ -x "$bundled" ]; then
+    coder_args=("$bundled" --url "$CODER_URL" --use-keyring=true)
+elif command -v coder > /dev/null 2>&1; then
+    coder_args=(coder --url "$CODER_URL")
+else
+    die "no coder CLI found. Connect once with the VS Code Coder extension, or \`brew install coder\`."
+fi
+
+coder() { "${coder_args[@]}" "$@"; }
+
+# --- pick a workspace -------------------------------------------------------
+
+WORKSPACES_JSON=$(coder list --output json) ||
+    die "could not list workspaces — is the extension's Coder session still valid?"
+export WORKSPACES_JSON
+
+if [ "$do_list" = true ]; then
+    python3 - << 'PY'
+import json, os
+for w in json.loads(os.environ["WORKSPACES_JSON"]):
+    status = w["latest_build"]["status"]
+    print(f'  {status:<10} {w["owner_name"]}/{w["name"]}  ({w["template_name"]})')
+PY
+    exit 0
+fi
+
+selection=$(python3 - "$workspace_arg" << 'PY'
+import json, os, sys
+
+want = sys.argv[1]
+ws = json.loads(os.environ["WORKSPACES_JSON"])
+
+if want:
+    matches = [w for w in ws if want in (w["name"], f'{w["owner_name"]}/{w["name"]}')]
+    problem = f"no workspace matching {want!r}" if not matches else None
+else:
+    matches = [w for w in ws if w["latest_build"]["status"] == "running"]
+    problem = (
+        "no workspace is running"
+        if not matches
+        else "more than one workspace is running" if len(matches) > 1 else None
+    )
+
+if problem:
+    listing = "\n".join(f'  {w["latest_build"]["status"]:<10} {w["name"]}' for w in ws)
+    sys.exit(f"{problem}; name the one you want:\n{listing}")
+
+w = matches[0]
+print(w["owner_name"], w["name"], w["latest_build"]["status"])
+PY
+) || exit 1
+
+read -r owner name status <<< "$selection"
+log "workspace: $owner/$name ($status)"
+
+if [ "$status" != "running" ]; then
+    log "starting it (this takes a minute or two)..."
+    coder start --yes "$owner/$name"
+fi
+
+# Remote commands go over plain OpenSSH, using the host alias the VS Code
+# extension maintains in ~/.ssh/config. `coder ssh` allocates a PTY even for a
+# one-shot command, so a script fed to it on stdin never sees EOF and hangs.
+ssh_conf="$HOME/Library/Application Support/coder.coder-remote/ssh/vscode--$coder_host.conf"
+[ -r "$ssh_conf" ] ||
+    die "no SSH config for $coder_host — connect once with the VS Code Coder extension first"
+ssh_host="coder-vscode.$coder_host--$owner--$name"
+
+# A just-started workspace answers only once its agent is up.
+remote_home=""
+for attempt in 1 2 3 4 5 6; do
+    if remote_home=$(ssh -o BatchMode=yes "$ssh_host" 'printf %s "$HOME"' 2> /dev/null); then
+        break
+    fi
+    [ "$attempt" = 1 ] && log "waiting for the workspace agent..."
+    sleep 10
+done
+[ -n "$remote_home" ] || die "could not reach $ssh_host over SSH"
+work_dir="$remote_home/$WORK_DIR_NAME"
+
+# --- push local config ------------------------------------------------------
+
+[ -r "$HOME/.gitconfig" ] || die "no ~/.gitconfig to send"
+command -v gh > /dev/null 2>&1 || die "gh is not installed locally"
+
+gh_token=$(gh auth token) ||
+    die "no local gh token — run \`gh auth login\` first"
+
+# Everything travels base64'd inside the script we pipe over stdin, so no
+# secret ever appears in an argv the workspace's other processes could read.
+# The [credential] section is dropped on the way out. The workspace registers
+# its own github.com credential helper, and git treats an empty generic
+# `credential.helper` as a reset of the *whole* accumulated helper list — so
+# carrying the Mac's `helper = store` over here, or trying to neutralise it,
+# both end with git unable to authenticate to GitHub at all.
+gitconfig_portable=$(
+    awk '
+        /^[[:space:]]*\[/ { in_credential = ($0 ~ /^[[:space:]]*\[credential([[:space:]]|\])/) }
+        !in_credential
+    ' "$HOME/.gitconfig"
+)
+
+head=$(
+    cat << EOF
+GITCONFIG_B64='$(printf '%s\n' "$gitconfig_portable" | base64 | tr -d '\n')'
+GH_TOKEN_B64='$(printf %s "$gh_token" | base64 | tr -d '\n')'
+WORK_DIR='$work_dir'
+CODER_EXTERNAL_AUTH_HINT='$CODER_URL/external-auth/github'
+EOF
+)
+
+body=$(
+    cat << 'REMOTE'
+set -euo pipefail
+say() { printf '  \033[36m•\033[0m %s\n' "$*"; }
+
+mkdir -p "$WORK_DIR"
+say "$WORK_DIR ready"
+
+# My Mac gitconfig lands in its own file and is *included* from ~/.gitconfig
+# rather than replacing it. ~/.gitconfig belongs to the workspace: `gh auth
+# setup-git` rewrites its credential-helper blocks on every boot, and
+# overwriting them breaks git push until the next reboot.
+printf %s "$GITCONFIG_B64" | base64 -d > "$HOME/.gitconfig-mac"
+
+# Linux-side corrections to that config. Included after it, so these win.
+{
+    echo "# Written by coder-dev. Corrects ~/.gitconfig-mac for this workspace."
+    echo "[core]"
+    if command -v nvim > /dev/null 2>&1; then
+        echo "  editor = $(command -v nvim)"
+    else
+        echo "  editor = $(command -v vim || command -v vi)"
+    fi
+    if ! command -v delta > /dev/null 2>&1; then
+        echo "  pager = less"
+        echo "[interactive]"
+        echo "  diffFilter = cat"
+    fi
+} > "$HOME/.gitconfig-coder"
+
+for inc in .gitconfig-mac .gitconfig-coder; do
+    git config --global --get-all include.path 2> /dev/null |
+        grep -qxF "$HOME/$inc" ||
+        git config --global --add include.path "$HOME/$inc"
+done
+say "git config included from ~/.gitconfig-mac (+ ~/.gitconfig-coder overrides)"
+
+umask 077
+printf %s "$GH_TOKEN_B64" | base64 -d > "$HOME/.gh-token"
+chmod 600 "$HOME/.gh-token"
+
+# Goes at the *top* of ~/.bashrc, above Debian's "if not running
+# interactively, don't do anything" guard. Anything that sources .bashrc from a
+# non-interactive shell — Claude Code building its shell snapshot, for one —
+# hits that guard's `return` and stops reading, so a block appended at the end
+# would only ever apply to hand-typed terminals.
+touch "$HOME/.bashrc"
+bashrc_tmp=$(mktemp)
+awk '
+    /^# >>> coder-dev >>>$/ { skip = 1 }
+    !skip
+    /^# <<< coder-dev <<<$/ { skip = 0 }
+' "$HOME/.bashrc" > "$bashrc_tmp"
+
+{
+    cat << 'BASHRC'
+# >>> coder-dev >>>
+# This workspace re-runs `gh auth login` with the Ziggy bot's installation
+# token every 30 minutes, which makes the bot gh's *active* account — so
+# `gh auth switch` never sticks. GH_TOKEN outranks anything in hosts.yml, so
+# exporting it here keeps gh (and the git credential helper it backs) acting
+# as me for the life of the shell, refresh loop or not.
+if [ -r "$HOME/.gh-token" ]; then
+    GH_TOKEN="$(cat "$HOME/.gh-token")"
+    export GH_TOKEN
+fi
+# <<< coder-dev <<<
+
+BASHRC
+    cat "$bashrc_tmp"
+} > "$HOME/.bashrc"
+rm -f "$bashrc_tmp"
+say "~/.bashrc exports GH_TOKEN from ~/.gh-token"
+
+who=$(GH_TOKEN="$(cat "$HOME/.gh-token")" gh api user --jq .login 2> /dev/null) ||
+    who="(token rejected by GitHub)"
+say "gh will act as: $who"
+
+# Coder's own GitHub external auth is configured on this deployment but is not
+# linked to my account. Linking it once would make the workspace able to mint
+# my token itself, so this push from the Mac would stop being necessary.
+if ! coder external-auth access-token github > /dev/null 2>&1; then
+    say "tip: linking $CODER_EXTERNAL_AUTH_HINT would remove the need to push a token at all"
+fi
+REMOTE
+)
+
+log "setting up $owner/$name..."
+printf '%s\n%s\n' "$head" "$body" | ssh -o BatchMode=yes "$ssh_host" bash -s
+
+# --- open vs code -----------------------------------------------------------
+
+if [ "$do_open" = true ]; then
+    # The extension's own URI handler, rather than a raw vscode-remote:// URI,
+    # so it does the deployment auth and SSH-config bookkeeping it expects to.
+    uri=$(
+        python3 -c '
+import sys, urllib.parse
+url, owner, name, folder = sys.argv[1:5]
+q = urllib.parse.urlencode({"url": url, "owner": owner, "workspace": name, "folder": folder})
+print(f"vscode://coder.coder-remote/open?{q}")
+' "$CODER_URL" "$owner" "$name" "$work_dir"
+    )
+    log "opening VS Code at $work_dir"
+    if command -v code > /dev/null 2>&1; then
+        code --open-url "$uri"
+    else
+        open "$uri"
+    fi
+fi
+
+log "done. Start a fresh terminal in the workspace and gh is you."

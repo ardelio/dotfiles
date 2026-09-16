@@ -47,7 +47,11 @@ export PATH="$HOME/.bin:$PATH"
 export PATH="/opt/homebrew/opt/python@3.11/libexec/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"   # pipx
-export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
+
+# --- Android SDK ---
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/cmdline-tools/latest/bin"
 
 export AWS_PAGER=""
 
