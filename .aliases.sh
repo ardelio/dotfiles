@@ -12,7 +12,7 @@ alias top='glances'
 alias randomAlphaNum='date | md5sum | head -c 12'
 alias githash="git l | head -1 | awk '{print \$2}'"
 alias gitwipebranches="git b | grep -v \"^\* \$(git symbolic-ref refs/remotes/origin/HEAD | sed 's/.*\///')\" | xargs git b -D"
-alias ssh_pi="ssh anthonysceresini@pi5.local"
+alias ssh_pi="ssh ardelio@pi5.local"
 alias herdr_list="herdr agent list | jq '.result.agents[] | { agent, cwd, pane_id }'"
 
 # Attach to the herdr agent running in the current project (git root, or $PWD if
@@ -157,7 +157,8 @@ function worktree() {
   git branch | grep $branch \
     && git worktree add $worktree_dir $branch \
     || git worktree add -b $branch $worktree_dir
-  code $worktree_dir
+  cd $worktree_dir
+  CLAUDE_CONFIG_DIR=~/.claude-prp code .
 }
 
 function worktree_rm() {

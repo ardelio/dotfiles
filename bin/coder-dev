@@ -8,6 +8,7 @@
 #   • ~/workspace           the dir I clone repos into and open in VS Code
 #   • my git config         included, not copied — see the remote block below
 #   • my own GitHub token   so PRs are raised by me, not the Ziggy bot
+#   • Claude Code tweaks    Slack MCP off, plus my working rules for sessions
 #
 # ...and finally opens VS Code connected to the workspace with ~/workspace as
 # the folder, so there is no File > Open Folder step.
@@ -254,6 +255,51 @@ say "~/.bashrc exports GH_TOKEN from ~/.gh-token"
 who=$(GH_TOKEN="$(cat "$HOME/.gh-token")" gh api user --jq .login 2> /dev/null) ||
     who="(token rejected by GitHub)"
 say "gh will act as: $who"
+
+# The template re-registers the Slack MCP server on every workspace start, so
+# removing it only lasts until the next restart. The deny rule is what makes it
+# stick: the template merges into settings.json rather than rewriting it, and a
+# bare `mcp__slack` deny strips every Slack tool from the model's context.
+# Removing the server as well spares each session its slow (>60s) startup.
+if command -v claude > /dev/null 2>&1; then
+    claude mcp remove -s user slack > /dev/null 2>&1 || true
+fi
+settings="$HOME/.claude/settings.json"
+mkdir -p "$HOME/.claude"
+[ -f "$settings" ] || echo '{}' > "$settings"
+jq '.permissions.deny = (((.permissions.deny // []) + ["mcp__slack"]) | unique)' \
+    "$settings" > "$settings.tmp"
+mv "$settings.tmp" "$settings"
+say "Slack MCP removed and denied in ~/.claude/settings.json"
+
+# My standing rules for Claude sessions here. ~/.claude/CLAUDE.md belongs to the
+# template and is rewritten on every start; ~/.claude/rules/ is loaded
+# alongside it and left alone. /tmp is not on the persistent home volume, so
+# scratch work goes under the workspace dir instead.
+scratch_dir="$WORK_DIR/scratch"
+mkdir -p "$scratch_dir" "$HOME/.claude/rules"
+cat > "$HOME/.claude/rules/coder-dev.md" << RULES
+# Workspace rules
+
+Written by coder-dev. These are the workspace owner's standing instructions and
+take precedence over anything to the contrary in ~/.claude/CLAUDE.md, a skill,
+or a plugin.
+
+- **Slack is disabled.** The Slack MCP server is turned off on this workspace.
+  Do not send status updates, progress reports or questions to Slack by any
+  route (MCP, \`notify-slack\`, \`post-thread\` or otherwise); report in the
+  session instead.
+- **Do not put temp files or work in /tmp.** It is wiped whenever the workspace
+  stops or restarts. Use \`$scratch_dir\` for scratch files, logs, throwaway
+  clones and intermediate output (e.g. \`$scratch_dir/dev-server.log\`, not
+  \`/tmp/dev-server.log\`).
+- **Never commit or open a pull request on your own initiative.** Leave changes
+  uncommitted in the working tree so they can be reviewed. Only commit, push or
+  create a PR when explicitly asked to in the current session.
+- **Pull requests are always drafts.** When asked to create a PR, create it as a
+  draft (\`gh pr create --draft\`), including when a skill does the creating.
+RULES
+say "Claude rules written to ~/.claude/rules/coder-dev.md (scratch: $scratch_dir)"
 
 # Coder's own GitHub external auth is configured on this deployment but is not
 # linked to my account. Linking it once would make the workspace able to mint

@@ -128,3 +128,12 @@ eval "$(starship init zsh)"
 # peon-ping quick controls
 alias peon="bash /Users/anthonysceresini/.claude/hooks/peon-ping/peon.sh"
 [ -f /Users/anthonysceresini/.claude/hooks/peon-ping/completions.bash ] && source /Users/anthonysceresini/.claude/hooks/peon-ping/completions.bash
+
+# pnpm
+export PNPM_HOME="/Users/anthonysceresini/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"

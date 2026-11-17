@@ -1,0 +1,12 @@
+#!/bin/sh
+# work Claude Code — pins its config (account, MCP servers, plugins, transcripts) to
+# ~/.claude-prp, leaving the default ~/.claude free for a personal Claude install.
+# The path must be literal: Claude Code does not expand ~ in CLAUDE_CONFIG_DIR.
+# A real executable (not an alias) so herdr can use it as a resume command.
+# prp only passes flags through to claude after `--`; insert it so
+# `prp-claude --resume <id>` works (an explicit leading `--` is still accepted).
+export CLAUDE_CONFIG_DIR="$HOME/.claude-prp"
+if [ "$#" -eq 0 ] || [ "$1" = "--" ]; then
+  exec prp code:claude "$@"
+fi
+exec prp code:claude -- "$@"
