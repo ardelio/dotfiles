@@ -275,9 +275,13 @@ say "Slack MCP removed and denied in ~/.claude/settings.json"
 # My standing rules for Claude sessions here. ~/.claude/CLAUDE.md belongs to the
 # template and is rewritten on every start; ~/.claude/rules/ is loaded
 # alongside it and left alone. /tmp is not on the persistent home volume, so
-# scratch work goes under the workspace dir instead.
-scratch_dir="$WORK_DIR/scratch"
-mkdir -p "$scratch_dir" "$HOME/.claude/rules"
+# temp work goes under the workspace dir instead. The rename from the old
+# scratch/ name is carried over once, unless tmp/ already exists.
+tmp_dir="$WORK_DIR/tmp"
+if [ -d "$WORK_DIR/scratch" ] && [ ! -e "$tmp_dir" ]; then
+    mv "$WORK_DIR/scratch" "$tmp_dir"
+fi
+mkdir -p "$tmp_dir" "$HOME/.claude/rules"
 cat > "$HOME/.claude/rules/coder-dev.md" << RULES
 # Workspace rules
 
@@ -289,17 +293,22 @@ or a plugin.
   Do not send status updates, progress reports or questions to Slack by any
   route (MCP, \`notify-slack\`, \`post-thread\` or otherwise); report in the
   session instead.
-- **Do not put temp files or work in /tmp.** It is wiped whenever the workspace
-  stops or restarts. Use \`$scratch_dir\` for scratch files, logs, throwaway
-  clones and intermediate output (e.g. \`$scratch_dir/dev-server.log\`, not
-  \`/tmp/dev-server.log\`).
+- **Repos being changed go in \`$WORK_DIR\`.** Any repo the session is making
+  changes to (for a PR or otherwise) is cloned directly under \`$WORK_DIR\`,
+  e.g. \`$WORK_DIR/hestia\`. Reuse an existing clone there if one exists.
+- **All temp files and work go in \`$tmp_dir\`, never /tmp.** /tmp is wiped
+  whenever the workspace stops or restarts. Use \`$tmp_dir\` for temp files,
+  logs, intermediate output and throwaway clones of repos that are only being
+  read for reference, e.g. \`$tmp_dir/dev-server.log\` rather than
+  \`/tmp/dev-server.log\`, and a quick shallow clone of upload-gateway into
+  \`$tmp_dir/upload-gateway\` rather than \`$WORK_DIR/upload-gateway\`.
 - **Never commit or open a pull request on your own initiative.** Leave changes
   uncommitted in the working tree so they can be reviewed. Only commit, push or
   create a PR when explicitly asked to in the current session.
 - **Pull requests are always drafts.** When asked to create a PR, create it as a
   draft (\`gh pr create --draft\`), including when a skill does the creating.
 RULES
-say "Claude rules written to ~/.claude/rules/coder-dev.md (scratch: $scratch_dir)"
+say "Claude rules written to ~/.claude/rules/coder-dev.md (tmp: $tmp_dir)"
 
 # Coder's own GitHub external auth is configured on this deployment but is not
 # linked to my account. Linking it once would make the workspace able to mint
